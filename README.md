@@ -26,8 +26,8 @@ Variational Autoencoder for Molecular Graph Generation. ICML 2018:
 * Install torch, skorch, pyjanitor, rdkit, and streamlit in your python environment.
 
 * Get a copy of the JT-VAE JAEGER branch 
-  [here](https://github.com/to/be/updated)
-  Include the `jtnnicml18-jtnn` directory in your python path.
+  [here](https://github.com/PsiGamma/icml18-jtnn/tree/jaeger)
+  Include the `icml18-jtnn` directory in your python path.
 
 * Get a copy of the JAEGER repo (this repo). Include the `src`
   directory in your python path
