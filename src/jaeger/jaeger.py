@@ -16,7 +16,7 @@ limitations under the License.
 
 NAME="JAEGER"
 TITLE="**JAEGER**: JT-VAE Generative Modeling"
-JAEGER_HOME="/patj/to/models" 
+JAEGER_HOME="/path/to/models"
 BASE_DIR=JAEGER_HOME+"/assays" 
 TRAINING_DIR=JAEGER_HOME+"/training_data"
 AVAIL_MODELS=JAEGER_HOME+"/jaeger_avail_models.csv"

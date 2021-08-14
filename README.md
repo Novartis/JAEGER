@@ -21,16 +21,68 @@ predictive models to discover and optimize novel active molecules.
 Variational Autoencoder for Molecular Graph Generation. ICML 2018:
 2328-2337
 
+## Contents
+
+- `src`: Python source code for JAEGER
+- `models`: Data for building demo model
+
+## System requirements
+
+### Hardware
+#### GPUs
+
+We have tested JAEGER on machines with the following GPUs:
+
+- NVIDIA Tesla K80 
+- NVIDIA Tesla V100
+
+### Software
+
+#### Operating systems
+
+We have tested JAEGER on machines with the following systems:
+
+- Red Hat Enterprise Linux 6
+- CentOS Linux 7
+
+
+#### Sofware dependencies
+
+- python 3.8.6
+- pandas 1.1.5
+- numpy 1.19.5
+- pyjanitor 0.20.10
+- pytorch 1.7.0
+- rdkit 2020.09.3
+- scikit-learn 0.24.0
+- streamlit 0.74.1
+
 ## Installation
 
-* Install torch, skorch, pyjanitor, rdkit, and streamlit in your python environment.
+* Install the python libraries mentioned in **Software dependencies**
+  above into your python environment.
 
-* Get a copy of the JT-VAE JAEGER branch 
-  [here](https://github.com/PsiGamma/icml18-jtnn/tree/jaeger)
-  Include the `icml18-jtnn` directory in your python path.
+* Get the `jaeger` branch from the JT-VAE JAEGER fork located
+  [here](https://github.com/PsiGamma/icml18-jtnn/tree/jaeger).
+  Include the `icml18-jtnn` **and** the `icml18-jtnn/jtnn` directories
+  in your python path.
 
 * Get a copy of the JAEGER repo (this repo). Include the `src`
   directory in your python path
+  
+Installation time of the software dependencies will vary depending on
+your computational environment. The larger packages like `pytorch` can
+take a couple of hours.
+
+  
+## Demo dataset
+
+We include a demo dataset with all molecules with measured 3D7
+inhibition activity from the
+[Deposited Set 2: Novartis GNF Whole Cell Dataset](https://chembl.gitbook.io/chembl-ntd/downloads/deposited-set-2-novartis-gnf-whole-cell-dataset-20th-may-2010)
+hosted at the
+[ChEMBL - Neglected Tropical Disease archive](https://chembl.gitbook.io/chembl-ntd/). The
+demo dataset is located at `./models/training_data/Novartis_GNF.csv`.
 
 ## Training a model
 

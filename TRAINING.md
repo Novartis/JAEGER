@@ -15,13 +15,16 @@ The training data should be provided in a CSV file with the following four colum
 * `<AC50 measurement>`: Qualified AC50 value
 
 The order of the columns is to be respected.
-The column names for the latter two columns don't matter.
+The column names for the first two columns must be `Id` and `Structure`, respectively.
+The column names for the latter two columns can be arbitrary.
+
+An example CSV file with training data is included in `./models/training_data/Novartis_GNF.csv`.
 
 
 ## Set JAEGER_HOME
 
 In `src/jaeger/jaeger.py`, line 19, please adjust the variable
-JAEGER_HOME to any directory where you want JAEGER to write out the
+`JAEGER_HOME` to any directory where you want JAEGER to write out the
 models. This path is referred as `$JAEGER_HOME` in the following text.
 
 ## Training Script
@@ -43,7 +46,7 @@ parameters:
  
 
 The training process is split into two phases: model pre-training and
-and model fine-tuning. In pre-training, the Gaussian prior on the
+ model fine-tuning. In pre-training, the Gaussian prior on the
 latent representations is disabled. During fine-tuning the Gaussian
 prior is turned back on. Pre-training and fine-tuning are each run
 over 36 epochs. The script will run both phases consecutively. 
@@ -60,12 +63,13 @@ fine-tuning are saved at files starting with
 The script will use the GPU assigned through the
 `$CUDA_VISIBLE_DEVICES` environment variable for training.
 
-As an example:
+As an example with the demo data (please adjust the path to the CSV file accordingly):
 
 ```sh
-export ASSAY_ID=my_assay_id
-python jaeger_train.py --csv_file /path/to/csv/file_with_ids_smiles_ac50s.csv  --assay_id $ASSAY_ID --num_threads 24 --use_qualified True
+python jaeger_train.py --csv_file /path/to/models/training_data/Novartis_GNF.csv  --assay_id Novartis_GNF --num_threads 24 --use_qualified True
 ```
+
+On the demo dataset it will take about 24 hours for the training process to complete.
 
 ## Validation of inference model
 
@@ -92,8 +96,7 @@ The script will save the pAC50 predictions and embeddings, respectively, onto
 As an example:
 
 ```sh
-export ASSAY_ID=my_assay_id
-python jaeger_validate.py --csv_file /path/to/csv/file_with_ids_smiles_ac50s.csv --assay_id $ASSAY_ID
+python jaeger_validate.py /path/to/models/training_data/Novartis_GNF.csv --assay_id Novartis_GNF
 ```
 
 ## Cross-validation
@@ -126,6 +129,5 @@ predictions for the test data over all runs is also saved at
 As an example:
 
 ```sh
-export ASSAY_ID=my_assay_id
-python jaeger_xval.py --csv_file /path/to/csv/file_with_ids_smiles_ac50s.csv  --assay_id $ASSAY_ID --num_threads 24 --use_qualified True
+python jaeger_xval.py --csv_file /path/to/models/training_data/Novartis_GNF.csv  --assay_id Novartis_GNF --num_threads 24 --use_qualified True
 ```

@@ -575,13 +575,13 @@ def search_app(
     # SEARCH PARAMETERS
     if args.run_streamlit:
         sel_direction = st.sidebar.selectbox(
-            "Select directions to explore", np.arange(1, tree_dim + 1, 1), index=3
+            "Select directions to sample", np.arange(1, tree_dim + 1, 1), index=3
         )
-        sel_search_strategy = st.sidebar.selectbox(
-            "Select exploration strategy", list(["Deterministic", "DeterministicFullGraph"]), index=0
+        sel_sampling_strategy = st.sidebar.selectbox(
+            "Select sampling strategy", list(["Deterministic", "DeterministicFullGraph"]), index=0
         )            
-        sel_search_extent = st.sidebar.selectbox(
-            "Select exploration density", list(search_extents.keys()), index=0
+        sel_sampling_density = st.sidebar.selectbox(
+            "Select sampling density", list(search_extents.keys()), index=0
         )
         direction = st.sidebar.selectbox(
             "Optimization direction", ["Increase","Decrease"], index=0
@@ -604,15 +604,15 @@ def search_app(
 
     else:
         sel_direction = args.sel_direction
-        sel_search_extent = args.sel_search_extent
-        sel_search_strategy = args.sel_search_strategy
+        sel_sampling_density = args.sel_sampling_density
+        sel_sampling_strategy = args.sel_sampling_strategy
         sim_cutoff = args.sim_cutoff
         filter_mols = args.filter_mols
         direction = args.opt_direction
-        predict_in_chem_space = args.predict_in_chem_space
+        predict_in_chem_space = False
 
 
-    strategy_params = search_extents[sel_search_extent]
+    strategy_params = search_extents[sel_sampling_density]
     std_scale = strategy_params[0]
     n_steps = strategy_params[1]
 
@@ -660,7 +660,7 @@ def search_app(
             sim_cutoff,
             cosine_cutoff,
             sel_direction,
-            sel_search_strategy,
+            sel_sampling_strategy,
             DO_VISUAL_DEBUG,
             reducer_tree,
             surf_fig,
@@ -732,8 +732,8 @@ def search_app(
                 search_params = {
                     "cmpd": [cmpd],
                     "sel_direction": [int(sel_direction - 1)],
-                    "search_strategy": [sel_search_strategy],
-                    "search_extent": [sel_search_extent],                    
+                    "search_strategy": [sel_sampling_strategy],
+                    "search_extent": [sel_sampling_density],                    
                     "std_scale": [std_scale],
                     "n_steps": [int(n_steps)],
                     "sim_cutoff": [sim_cutoff],
@@ -759,9 +759,9 @@ def search_app(
                 + "-dir-"
                 + str(sel_direction - 1)
                 + "-strategy-"
-                + sel_search_strategy
+                + sel_sampling_strategy
                 + "-extent-"
-                + sel_search_extent
+                + sel_sampling_density
                 + "-cutoff-"
                 + str(sim_cutoff)
                 + "-filter-"
@@ -777,7 +777,7 @@ def search_app(
             search_params = {
                 "cmpd": cmpd,
                 "sel_direction": int(sel_direction - 1),
-                "search_strategy": sel_search_extent,
+                "search_strategy": sel_sampling_density,
                 "std_scale": std_scale,
                 "n_steps": int(n_steps),
                 "sim_cutoff": sim_cutoff,
@@ -798,7 +798,7 @@ def search_app(
 def main():
     # --- parse parameters
     parser = argparse.ArgumentParser(
-        description=jgr.NAME + " NN-explorer ",
+        description=jgr.NAME + " Compound Generator ",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )    
     parser.add_argument(
@@ -810,7 +810,7 @@ def main():
         help="Run streamlit app",
     )
     parser.add_argument(
-        "--assay_id", type=str, default="MalariaBloodStage", help="assay",
+        "--assay_id", type=str, default="Novartis_GNF", help="assay",
     )    
     parser.add_argument(
         "--cmpd", type=str, default="cpmd-1", help="Starting compound",
@@ -822,16 +822,16 @@ def main():
         "--sel_direction", type=int, default=4, help="Number of PC directions to use",
     )
     parser.add_argument(
-        "--sel_search_strategy", type=str,
+        "--sel_sampling_strategy", type=str,
             nargs="?",
             default="Deterministic",
-            help="Options are Deterministic or Random",
+            help="Options are Deterministic or DeterministicFullGraph",
     )
     parser.add_argument(
-        "--sel_search_extent",
+        "--sel_sampling_density",
         type=str,
-        default="MegaDense",
-        help="Options are Dense, SuperDense, and MegaDense",
+        default="SuperDense",
+        help="Options are Sparse, Dense, SuperDense, and MegaDense",
     )
     parser.add_argument(
         "--sim_cutoff", type=float, default=0.2, help="Tanimoto similarity cutoff ",
@@ -845,20 +845,11 @@ def main():
         default="Increase",
         help="Options are Increase or Decrease",
     )
-    parser.add_argument(
-        "--predict_in_chem_space",
-        type=str2bool,
-        nargs="?",
-        const=True,
-        default=True,
-        help="Predict using ECFPs",
-    )
     
     
     args = parser.parse_args()
-    print("[DEBUG] RUN STREAMLIT >>>>> " + str(args.run_streamlit))
+   
 
-    # now everything has to be run within the app
     
     # --- load assay data
     available_models = load_avail_models();
