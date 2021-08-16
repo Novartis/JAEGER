@@ -1,0 +1,2 @@
+assay_id,csv_file,pac50,qualified,assay_name,assay_name_short,unit,filter_mols
+Novartis_GNF,/path/to/models/training_data/Novartis_GNF.csv,True,True,PF proliferation inhibition 3D7 EC50 uM,3D7,pAC50,True
