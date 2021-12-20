@@ -115,3 +115,5 @@ See LICENSE.txt
 # Contact
 
 william_jose.godinez_navarro@novartis.com
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5794429.svg)](https://doi.org/10.5281/zenodo.5794429)
