@@ -116,6 +116,13 @@ See LICENSE.txt
 
 william_jose.godinez_navarro@novartis.com
 
+## Citation
+
+Please cite the code as follows:
+
+Godinez, W. J. & Ma, E. J. Novartis/JAEGER: Public. Zenodo, doi:https://doi.org/10.5281/zenodo.5794429 (2021).![image](https://user-images.githubusercontent.com/11574023/146853185-f420b918-7e0e-434e-96d7-e3d288b5a558.png)
+
+
 ## DOI
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5794429.svg)](https://doi.org/10.5281/zenodo.5794429)
